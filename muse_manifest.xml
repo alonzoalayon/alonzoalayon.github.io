@@ -1,0 +1,34 @@
+<manifest alg="2" build="1176" opt="true" iceEnabled="true" iceMarkupVersion="2" exportTarget="other" resolutions="1x" timestamp="1458948036314">
+  <folder name="css">
+    <file name="site_global.css" crc="422415861"/>
+    <file name="index.css" crc="3827659074" ref="index"/>
+  </folder>
+  <folder name="scripts">
+    <file name="jquery-1.8.3.min.js" crc="221936890" ref="index"/>
+    <file name="museutils.js" crc="3793461109" ref="index"/>
+    <file name="jquery.scrolleffects.js" crc="172766474" ref="index"/>
+    <file name="jquery.watch.js" crc="3766403489" ref="index"/>
+    <file name="webpro.js" crc="4263367560" ref="index"/>
+  </folder>
+  <folder name="images">
+    <file name="space.jpg" crc="4101469522" ref="index"/>
+    <file name="sun1.png" crc="222267638" ref="index"/>
+    <file name="venus.png" crc="23130729" ref="index"/>
+    <file name="mercury.png" crc="3764146642" ref="index"/>
+    <file name="earth.png" crc="3952463854" ref="index"/>
+    <file name="002.jpg" crc="4268161203" ref="index"/>
+    <file name="block_island_08152013.png" crc="4027100410" ref="index"/>
+    <file name="university-of-phoenix-logo-8x8@72.png" crc="3796341753" ref="index"/>
+    <file name="beast.png" crc="3864085856" ref="index"/>
+    <file name="apple_logo_volt.png" crc="419017620" ref="index"/>
+    <file name="freescale.png" crc="4142150056" ref="index"/>
+    <file name="manpower-logo1.png" crc="4233468935" ref="index"/>
+    <file name="camp_gladiator.png" crc="14819655" ref="index"/>
+    <file name="u267-17.png" crc="3904437901" ref="index"/>
+    <file name="u267-17-r.png" crc="174039896" ref="index"/>
+    <file name="u267-17-m.png" crc="4087376994" ref="index"/>
+    <file name="u267-17-fs.png" crc="450571855" ref="index"/>
+    <file name="captcha.png" crc="3972111057" ref="index"/>
+  </folder>
+  <file name="index.html" crc="4159767152" mt="1423420801110" redirect="true"/>
+</manifest>
