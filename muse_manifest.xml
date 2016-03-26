@@ -1,34 +1,36 @@
-<manifest alg="2" build="1176" opt="true" iceEnabled="true" iceMarkupVersion="2" exportTarget="other" resolutions="1x" timestamp="1458948036314">
+<manifest alg="2" build="2015.1.2.344" opt="true" iceEnabled="true" iceMarkupVersion="2" iceEnabledOptions="link,responsive" exportTarget="other" domain="alonzoalayon.github.io" resolutions="1x" timestamp="1459025074546">
   <folder name="css">
-    <file name="site_global.css" crc="422415861"/>
-    <file name="index.css" crc="3827659074" ref="index"/>
+    <file name="site_global.css" crc="131700929"/>
+    <file name="index.css" crc="4132781703" ref="index"/>
   </folder>
   <folder name="scripts">
-    <file name="jquery-1.8.3.min.js" crc="221936890" ref="index"/>
-    <file name="museutils.js" crc="3793461109" ref="index"/>
-    <file name="jquery.scrolleffects.js" crc="172766474" ref="index"/>
-    <file name="jquery.watch.js" crc="3766403489" ref="index"/>
-    <file name="webpro.js" crc="4263367560" ref="index"/>
+    <file name="jquery-1.8.3.min.js" crc="207176553" ref="index"/>
+    <file name="museutils.js" crc="3790713428" ref="index"/>
+    <file name="whatinput.js" crc="84559013" ref="index"/>
+    <file name="jquery.watch.js" crc="4244854265" ref="index"/>
+    <file name="webpro.js" crc="329496574" ref="index"/>
+    <file name="jquery.scrolleffects.js" crc="4219894366" ref="index"/>
   </folder>
   <folder name="images">
-    <file name="space.jpg" crc="4101469522" ref="index"/>
-    <file name="sun1.png" crc="222267638" ref="index"/>
-    <file name="venus.png" crc="23130729" ref="index"/>
-    <file name="mercury.png" crc="3764146642" ref="index"/>
-    <file name="earth.png" crc="3952463854" ref="index"/>
-    <file name="002.jpg" crc="4268161203" ref="index"/>
-    <file name="block_island_08152013.png" crc="4027100410" ref="index"/>
-    <file name="university-of-phoenix-logo-8x8@72.png" crc="3796341753" ref="index"/>
-    <file name="beast.png" crc="3864085856" ref="index"/>
-    <file name="apple_logo_volt.png" crc="419017620" ref="index"/>
-    <file name="freescale.png" crc="4142150056" ref="index"/>
-    <file name="manpower-logo1.png" crc="4233468935" ref="index"/>
-    <file name="camp_gladiator.png" crc="14819655" ref="index"/>
-    <file name="u267-17.png" crc="3904437901" ref="index"/>
-    <file name="u267-17-r.png" crc="174039896" ref="index"/>
-    <file name="u267-17-m.png" crc="4087376994" ref="index"/>
-    <file name="u267-17-fs.png" crc="450571855" ref="index"/>
-    <file name="captcha.png" crc="3972111057" ref="index"/>
+    <file name="space.jpg" crc="4101469522" seo="true" ref="index"/>
+    <file name="sun1.png" crc="4067350877" seo="true" ref="index"/>
+    <file name="mercury.png" crc="3764146642" seo="true" ref="index"/>
+    <file name="venus.png" crc="23130729" seo="true" ref="index"/>
+    <file name="earth.png" crc="3952463854" seo="true" ref="index"/>
+    <file name="aaeaaqaaaaaaaayfaaaajdkynjewzjjkltnlotktndgwyy1hngnjltdhywfiogi1nzfimg.jpg" crc="174438488" seo="true" ref="index"/>
+    <file name="block_island_08152013.png" crc="4027100410" seo="true" ref="index"/>
+    <file name="university-of-phoenix-logo-8x8@72.png" crc="3796341753" seo="true" ref="index"/>
+    <file name="aca_logo_stacked_300.png" crc="4169582047" seo="true" ref="index"/>
+    <file name="beast.png" crc="3864085856" seo="true" ref="index"/>
+    <file name="camp_gladiator.png" crc="14819655" seo="true" ref="index"/>
+    <file name="apple_logo_volt.png" crc="419017620" seo="true" ref="index"/>
+    <file name="freescale.png" crc="4142150056" seo="true" ref="index"/>
+    <file name="manpower-logo1.png" crc="4233468935" seo="true" ref="index"/>
+    <file name="u267-17.png" crc="200884290" ref="index"/>
+    <file name="u267-17-r.png" crc="195222174" ref="index"/>
+    <file name="u267-17-m.png" crc="473606238" ref="index"/>
+    <file name="u267-17-fs.png" crc="59421444" ref="index"/>
+    <file name="captcha.png" crc="362548909" ref="index"/>
   </folder>
-  <file name="index.html" crc="4159767152" mt="1423420801110" redirect="true"/>
+  <file name="index.html" crc="127804638" seo="true" mt="1459025051023" redirect="true"/>
 </manifest>
