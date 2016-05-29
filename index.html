@@ -33,6 +33,10 @@
     <link href="assets/css/plugins/background.css" rel="stylesheet" type="text/css">
     <link href="assets/css/plugins/animate.css" rel="stylesheet" type="text/css">
     <link href="assets/font-awesome/css/font-awesome-animation.min.css" rel="stylesheet" type="text/css">
+    <!-- CSS style for projects -->
+
+    <link href="assets/css/tic-tac-toe-style.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/Towersstyle.css" rel="stylesheet" type="text/css">
     <!-- Vitality Theme CSS -->
     <!-- Uncomment the color scheme you want to use. -->
     <!-- <link href="assets/css/vitality-red.css" rel="stylesheet" type="text/css"> -->
@@ -372,7 +376,7 @@
                 <div class="col-lg-12">
                     <div id="portfoliolist">
 
-                        <div class="portfolio identity wow fadeIn" data-cat="identity" href="#portfolioModal3" data-toggle="modal">
+                        <div class="portfolio identity faa-bounce animated-hover" data-cat="identity" href="#portfolioModal3" data-toggle="modal">
                             <div class="portfolio-wrapper">
                                 <img src="assets/img/portfolio/grid/frontend/pigLatin.jpg" alt="">
                                 <div class="caption">
@@ -384,9 +388,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="portfolio identity" data-cat="identity" href="#portfolioModal3" data-toggle="modal">
+                        <div class="portfolio identity faa-bounce animated-hover" data-cat="identity" href="#portfolioModal2" data-toggle="modal">
                             <div class="portfolio-wrapper">
-                                <img src="assets/img/portfolio/grid/frontend/towerHanoi.png" alt="">
+                                <img src="assets/img/portfolio/grid/frontend/towerHanoijQuery.png" alt="">
                                 <div class="caption">
                                     <div class="caption-text">
                                         <a class="text-title">TOWERS OF HANOI</a>
@@ -396,10 +400,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="portfolio identity" data-cat="identity" href="#portfolioModal1" data-toggle="modal">
+                        <div class="portfolio identity faa-bounce animated-hover" data-cat="identity" href="#portfolioModal1" data-toggle="modal">
                             <div class="portfolio-wrapper">
-                                <img src="assets/img/portfolio/grid/frontend/tic.png" alt="">
-
+                                <img src="assets/img/portfolio/grid/frontend/tictactoeJquery.png" alt="">
                                 <div class="caption">
                                     <div class="caption-text">
                                         <a class="text-title">TIC TAC TOE</a>
@@ -704,8 +707,8 @@
     </footer>
     <!-- Portfolio Modals -->
     <!-- Example Modal 1 -->
-    <!--<div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true" style="background-image: url('assets/img/creative/portfolio/bg-1.jpg')">
-        <div class="modal-content">
+    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true" style="background-image: url('assets/img/creative/portfolio/bg-1.jpg')">
+        <div class="modal-content" style="color:black;">
             <div class="close-modal" data-dismiss="modal">
                 <div class="lr">
                     <div class="rl">
@@ -716,26 +719,44 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-8 col-lg-offset-2">
-                            <img src="assets/img/client-logos/logo-1.png" class="img-responsive img-centered" alt="">
-                            <h2>Project Title</h2>
+                            <img src="assets/img/aca_logo_final.png" class="img-responsive img-centered" alt="">
+                            <h2 style="color:white;">Tic Tac Toe jQuery</h2>
                             <hr class="colored">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos modi in tenetur vero voluptatum sapiente dolores eligendi nemo iste ea. Omnis, odio enim sint quam dolorum dolorem. Nostrum, minus, ad.</p>
+                            <p style="color:white;">This Tic Toe Toe game was made using wonderful jQuery and javascript, although Jason was not present yet.</p>
+                            <div align="center" class="row">
+                              <div data-cell="0"></div>
+                              <div data-cell="1"></div>
+                              <div data-cell="2"></div>
+                            </div>
+                            <div class="row">
+                              <div data-cell="3"></div>
+                              <div data-cell="4"></div>
+                              <div data-cell="5"></div>
+                            </div>
+                            <div class="row">
+                              <div data-cell="6"></div>
+                              <div data-cell="7"></div>
+                              <div data-cell="8"></div>
+                            </div>
+                            <div id="announce-winner"></div>
+                              <!--<img src="assets/img/portfolio/mobile-screens.png" class="img-responsive img-centered" alt="">-->
+                          </div>
+
                         </div>
-                        <div class="col-lg-12">
-                            <img src="assets/img/portfolio/mobile-screens.png" class="img-responsive img-centered" alt="">
-                        </div>
+
+
                         <div class="col-lg-8 col-lg-offset-2">
                             <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
+                                <li style="color:white;">Contractor:
+                                    <strong><a href="">Austin Coding Academy</a>
                                     </strong>
                                 </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2015</a>
+                                <li style="color:white;">Date:
+                                    <strong><a href="">April 2016</a>
                                     </strong>
                                 </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
+                                <li style="color:white;">Service:
+                                    <strong><a href="">Web Development</a>
                                     </strong>
                                 </li>
                             </ul>
@@ -747,7 +768,7 @@
         </div>
     </div>
     <!-- Example Modal 2 -->
-    <!--<div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true" style="background-image: url('assets/img/creative/portfolio/bg-2.jpg')">
+    <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true" style="background-image: url('assets/img/creative/portfolio/bg-2.jpg')">
         <div class="modal-content">
             <div class="close-modal" data-dismiss="modal">
                 <div class="lr">
@@ -759,26 +780,47 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-8 col-lg-offset-2">
-                            <img src="assets/img/client-logos/logo-2.png" class="img-responsive img-centered" alt="">
-                            <h2>Project Title</h2>
+                            <img src="assets/img/aca_logo_final.png" class="img-responsive img-centered" alt="">
+                            <h2>Towers of Hanoi jQuery</h2>
                             <hr class="colored">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos modi in tenetur vero voluptatum sapiente dolores eligendi nemo iste ea. Omnis, odio enim sint quam dolorum dolorem. Nostrum, minus, ad.</p>
+                            <p>No Jason yet, but there is jQuery in action playing and manipulating with discs.</p>
+                            <div data-stack="1" id="tower1">
+
+                                <div data-block="100"></div>
+                              <div data-block="75"></div>
+                              <div data-block="50"></div>
+                              <div data-block="25"></div>
+
+
+
+                            </div>
+                            <div data-stack="2"  id="tower2">
+
+
+
+                            </div>
+                            <div data-stack="3"  id="tower3">
+
+
+
+                            </div>
+                            <div id="announce-game-won"></div>
                         </div>
                         <div class="col-lg-12">
-                            <img src="assets/img/portfolio/tablet-screens.png" class="img-responsive img-centered" alt="">
+                            <!--<img src="assets/img/portfolio/tablet-screens.png" class="img-responsive img-centered" alt="">-->
                         </div>
                         <div class="col-lg-8 col-lg-offset-2">
                             <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
+                                <li>Contractor:
+                                    <strong><a href="">Start Bootstrap</a>
                                     </strong>
                                 </li>
                                 <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2015</a>
+                                    <strong><a href="">April 2015</a>
                                     </strong>
                                 </li>
                                 <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
+                                    <strong><a href="">Web Development</a>
                                     </strong>
                                 </li>
                             </ul>
@@ -894,6 +936,9 @@
 
     <!-- Vitality Theme Scripts -->
     <script src="assets/js/vitality.js"></script>
+    <!-- project scripts-->
+    <script src="assets/js/tic-tac-toe-script.js"></script>
+    <script src="assets/js/Towersscript.js"></script>
 </body>
 
 </html>
