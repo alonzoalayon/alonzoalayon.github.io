@@ -18,19 +18,19 @@ export class Preloader extends Scene {
     }
 
     preload() {
-        this.load.setPath("src");
+        this.load.setPath("assets");
 
-        this.load.spritesheet("bird", "assets/birdSprite.png", {
+        this.load.spritesheet("bird", "birdSprite.png", {
             frameWidth: 16,
             frameHeight: 16,
         });
-        this.load.image("star", "assets/star.png");
-        this.load.audio("backgroundMusic", "assets/happy.mp3");
-        this.load.audio("powerUp", "assets/coin.mp3");
-        this.load.audio("hit", "assets/downer.mp3");
+        this.load.image("star", "star.png");
+        this.load.audio("backgroundMusic", "happy.mp3");
+        this.load.audio("powerUp", "coin.mp3");
+        this.load.audio("hit", "downer.mp3");
 
-        this.load.image("pipe", "assets/pipe.png");
-        this.load.image("pause", "assets/pause.png");
+        this.load.image("pipe", "pipe.png");
+        this.load.image("pause", "pause.png");
     }
 
     create() {
