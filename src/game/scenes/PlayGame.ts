@@ -48,8 +48,9 @@ export class PlayGame extends Scene {
         super("PlayGame");
     }
 
-    init(data: { config: Phaser.Types.Core.GameConfig }) {
-        this.config = data.config;
+    init() {
+        this.config = this.sys.game
+            .config as unknown as Phaser.Types.Core.GameConfig;
         this.diedFromCollision = false;
 
         const storedBestScore = localStorage.getItem("bestScore");

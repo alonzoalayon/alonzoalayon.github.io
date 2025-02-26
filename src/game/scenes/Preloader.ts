@@ -6,12 +6,17 @@ export class Preloader extends Scene {
     }
 
     init() {
-        this.add.image(512, 384, "background");
+        this.add.image(0, 0, "background").setOrigin(0, 0);
 
-        this.add.rectangle(512, 384, 468, 32).setStrokeStyle(1, 0xffffff);
+        const centerX = this.cameras.main.width / 2;
+        const centerY = this.cameras.main.height / 2;
 
-        const bar = this.add.rectangle(512 - 230, 384, 4, 28, 0xffffff);
-
+        this.add
+            .rectangle(centerX, centerY, 468, 32)
+            .setStrokeStyle(1, 0xffffff);
+        const bar = this.add
+            .rectangle(centerX - 230, centerY, 4, 28, 0xffffff)
+            .setOrigin(0, 0.5);
         this.load.on("progress", (progress: number) => {
             bar.width = 4 + 460 * progress;
         });
@@ -28,7 +33,7 @@ export class Preloader extends Scene {
         this.load.audio("backgroundMusic", "happy.mp3");
         this.load.audio("powerUp", "coin.mp3");
         this.load.audio("hit", "downer.mp3");
-
+        this.load.image("background", "sky.png");
         this.load.image("pipe", "pipe.png");
         this.load.image("pause", "pause.png");
     }

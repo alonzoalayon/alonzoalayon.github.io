@@ -27,7 +27,6 @@ export const config: Phaser.Types.Core.GameConfig = {
 
 const StartGame = (parent: string) => {
     const game = new Game({ ...config, parent });
-    game.scene.start("MainMenu", { config });
 
     return game;
 };

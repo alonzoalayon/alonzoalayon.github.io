@@ -14,6 +14,10 @@ export class MainMenu extends Scene {
         this.config = data.config;
     }
 
+    preload() {
+        this.load.image("background", "sky.png");
+    }
+
     create() {
         this.add.image(0, 0, "background").setOrigin(0, 0);
 
@@ -26,9 +30,9 @@ export class MainMenu extends Scene {
             })
             .setOrigin(0.5)
             .setInteractive({ useHandCursor: true });
-
+        console.log(this.config);
         this.startButton.on("pointerdown", () => {
-            this.scene.start("PlayGame", { config: this.config });
+            this.scene.start("PlayGame");
         });
 
         EventBus.emit("current-scene-ready", this);
