@@ -24,7 +24,8 @@
         "dev": "node log.js dev & vite --config vite/config.dev.mjs",
         "build": "node log.js build & vite build --config vite/config.prod.mjs",
         "dev-nolog": "vite --config vite/config.dev.mjs",
-        "build-nolog": "vite build --config vite/config.prod.mjs"
+        "build-nolog": "vite build --config vite/config.prod.mjs",
+        "deploy": "gh-pages -d dist"
     },
     "dependencies": {
         "phaser": "^3.87.0",
@@ -40,8 +41,10 @@
         "eslint": "^8.57.0",
         "eslint-plugin-react-hooks": "^4.6.2",
         "eslint-plugin-react-refresh": "^0.4.7",
+        "gh-pages": "^6.3.0",
         "terser": "^5.28.1",
         "typescript": "^5.2.2",
         "vite": "^5.3.1"
     }
 }
+
