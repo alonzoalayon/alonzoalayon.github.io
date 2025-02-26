@@ -30,7 +30,7 @@ export class MainMenu extends Scene {
             })
             .setOrigin(0.5)
             .setInteractive({ useHandCursor: true });
-        console.log(this.config);
+
         this.startButton.on("pointerdown", () => {
             this.scene.start("PlayGame");
         });
