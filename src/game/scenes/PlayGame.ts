@@ -2,16 +2,36 @@ import { GameObjects, Scene } from "phaser";
 import { EventBus } from "../EventBus";
 import { config } from "../main";
 
-const pipeVerticalDistanceRange: [number, number] = [150, 250];
-const pipeHorizontalDistanceRange: [number, number] = [400, 450];
+type DifficultyLevels = "EASY" | "MEDIUM" | "HARD";
+
 const resumeDetails: string[] = [
-    "Frontend Developer - 3 Years Experience",
+    "Frontend Developer - 3 Years Experience (Web & Mobile)",
     "Expert in React, Next.js, and React Native",
-    "QA Advocate - Implemented Playwright Tests",
-    "Built Reusable Components with Bit",
-    "Integrated Figma Designs into Apps",
-    "Experience with Phaser for Game Dev",
+    "QA Advocate - Implemented Playwright for Automated Testing",
+    "Optimized Dev Workflow with Reusable Components (Bit)",
+    "Integrated Figma Designs into Scalable UI Components",
+    "Game Developer - Built Phaser-Based Interactive Projects",
 ];
+const difficultyLevels: Record<
+    DifficultyLevels,
+    {
+        pipeHorizontalDistanceRange: [number, number];
+        pipeVerticalDistanceRange: [number, number];
+    }
+> = {
+    EASY: {
+        pipeHorizontalDistanceRange: [400, 450],
+        pipeVerticalDistanceRange: [150, 200],
+    },
+    MEDIUM: {
+        pipeHorizontalDistanceRange: [280, 330],
+        pipeVerticalDistanceRange: [140, 190],
+    },
+    HARD: {
+        pipeHorizontalDistanceRange: [250, 310],
+        pipeVerticalDistanceRange: [120, 150],
+    },
+};
 
 export class PlayGame extends Scene {
     background: GameObjects.Image;
@@ -43,6 +63,7 @@ export class PlayGame extends Scene {
     powerUpSound: Phaser.Sound.BaseSound;
     hitSound: Phaser.Sound.BaseSound;
     starCollected: boolean = false;
+    currentDifficulty: DifficultyLevels = "EASY";
 
     constructor() {
         super("PlayGame");
@@ -301,17 +322,19 @@ export class PlayGame extends Scene {
     }
 
     placePipe(uPipe: GameObjects.Sprite, lPipe: GameObjects.Sprite) {
+        const difficulty = difficultyLevels[this.currentDifficulty];
+
         const rightMostXPosition = this.getRightmostPipe();
 
         const pipeVerticalDistance = Phaser.Math.Between(
-            ...pipeVerticalDistanceRange
+            ...difficulty.pipeVerticalDistanceRange
         );
         const pipeVerticalPosition = Phaser.Math.Between(
             0 + 20,
             (config.height as number) - 20 - pipeVerticalDistance
         );
         const pipeHorizontalDistance = Phaser.Math.Between(
-            ...pipeHorizontalDistanceRange
+            ...difficulty.pipeHorizontalDistanceRange
         );
 
         uPipe.x = rightMostXPosition + pipeHorizontalDistance;
@@ -346,9 +369,20 @@ export class PlayGame extends Scene {
                 if (tempPipes.length === 2) {
                     this.placePipe(tempPipes[0], tempPipes[1]);
                     this.increaseScore();
+                    this.increaseDifficulty();
                 }
             }
         });
+    }
+
+    increaseDifficulty() {
+        if (this.score === 5) {
+            this.currentDifficulty = "MEDIUM";
+        }
+
+        if (this.score === 10) {
+            this.currentDifficulty = "HARD";
+        }
     }
 
     getRightmostPipe() {
