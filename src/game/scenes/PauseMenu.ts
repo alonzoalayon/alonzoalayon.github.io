@@ -19,11 +19,14 @@ export class PauseMenu extends Scene {
     }
 
     create() {
-        this.add.image(0, 0, "background").setOrigin(0, 0);
+        const { width, height } = this.scale;
+
+        this.background = this.add.image(0, 0, "background").setOrigin(0, 0);
+        this.background.setDisplaySize(width, height);
 
         this.resumeButton = this.add
-            .text(400, 200, "Resume Game", {
-                fontSize: "32px",
+            .text(width / 2, height * 0.4, "Resume Game", {
+                fontSize: `${Math.max(width * 0.04, 24)}px`,
                 color: "#fff",
                 backgroundColor: "#000",
                 padding: { x: 10, y: 5 },
@@ -41,8 +44,8 @@ export class PauseMenu extends Scene {
         });
 
         this.restartButton = this.add
-            .text(400, 300, "Restart Game", {
-                fontSize: "32px",
+            .text(width / 2, height * 0.5, "Restart Game", {
+                fontSize: `${Math.max(width * 0.04, 24)}px`,
                 color: "#fff",
                 backgroundColor: "#000",
                 padding: { x: 10, y: 5 },
@@ -55,8 +58,8 @@ export class PauseMenu extends Scene {
         });
 
         this.mainMenuButton = this.add
-            .text(400, 400, "Main Menu", {
-                fontSize: "32px",
+            .text(width / 2, height * 0.6, "Main Menu", {
+                fontSize: `${Math.max(width * 0.04, 24)}px`,
                 color: "#fff",
                 backgroundColor: "#000",
                 padding: { x: 10, y: 5 },
@@ -71,6 +74,23 @@ export class PauseMenu extends Scene {
         });
 
         EventBus.emit("current-scene-ready", this);
+
+        this.scale.on("resize", this.resize, this);
+    }
+
+    resize(gameSize: Phaser.Structs.Size) {
+        const { width, height } = gameSize;
+
+        this.background.setDisplaySize(width, height);
+
+        this.resumeButton.setPosition(width / 2, height * 0.4);
+        this.resumeButton.setFontSize(`${Math.max(width * 0.04, 24)}px`);
+
+        this.restartButton.setPosition(width / 2, height * 0.5);
+        this.restartButton.setFontSize(`${Math.max(width * 0.04, 24)}px`);
+
+        this.mainMenuButton.setPosition(width / 2, height * 0.6);
+        this.mainMenuButton.setFontSize(`${Math.max(width * 0.04, 24)}px`);
     }
 
     update() {}

@@ -80,18 +80,20 @@ export class PlayGame extends Scene {
         } else {
             this.bestScore = 0;
         }
+        this.scale.on("resize", this.handleResize, this);
     }
 
     create() {
         const PIPES_TO_RENDER = 4;
-        const initalBirdPosition = {
-            x: (config.width as number) * 0.1,
-            y: (config.height as number) / 2,
-        };
-
         this.pipes = this.physics.add.group();
 
-        this.background = this.add.image(400, 300, "background");
+        this.background = this.add.image(
+            (config.width as number) / 2,
+            (config.height as number) / 2,
+            "background"
+        );
+        this.resizeBackground();
+
         this.backgroundMusic = this.sound.add("backgroundMusic", {
             loop: true,
             volume: 0.5,
@@ -108,16 +110,14 @@ export class PlayGame extends Scene {
         this.backgroundMusic.play();
 
         this.bird = this.physics.add
-            .sprite(initalBirdPosition.x, initalBirdPosition.y, "bird")
-            .setOrigin(0)
+            .sprite(
+                (config.width as number) * 0.1,
+                (config.height as number) * 0.27,
+                "bird"
+            )
             .setGravityY(600)
             .setScale(3)
             .setFlipX(true);
-
-        (this.bird as Phaser.Physics.Arcade.Sprite).setBodySize(
-            this.bird.width,
-            this.bird.height - 8
-        );
 
         this.startCountdown();
 
@@ -209,12 +209,9 @@ export class PlayGame extends Scene {
             });
 
             this.children.list.forEach((child) => {
-                if (
-                    (child as Phaser.GameObjects.Sprite).texture.key === "star"
-                ) {
-                    (
-                        child as Phaser.Physics.Arcade.Sprite
-                    ).body!.velocity.x = 0;
+                const sprite = child as Phaser.GameObjects.Sprite;
+                if (sprite.texture && sprite.texture.key === "star") {
+                    (sprite.body as Phaser.Physics.Arcade.Body).velocity.x = 0;
                 }
             });
 
@@ -261,6 +258,34 @@ export class PlayGame extends Scene {
         );
     }
 
+    handleResize(gameSize: Phaser.Structs.Size) {
+        const { width, height } = gameSize;
+
+        this.resizeBackground();
+
+        this.bird.setPosition(width * 0.1, height / 2);
+        this.scoreText.setPosition(16, 16);
+        this.bestScoreText.setPosition(16, 48);
+        this.pauseButton.setPosition(width - 20, height - 20);
+
+        this.pipes.getChildren().forEach((pipe) => {
+            const pipeSprite = pipe as Phaser.GameObjects.Sprite;
+            if (pipeSprite.y > height) {
+                pipeSprite.y = height - 100;
+            }
+        });
+    }
+
+    resizeBackground() {
+        this.background.setPosition(
+            this.scale.width / 2,
+            this.scale.height / 2
+        );
+        const scaleX = this.scale.width / this.background.width;
+        const scaleY = this.scale.height / this.background.height;
+        this.background.setScale(Math.max(scaleX, scaleY));
+    }
+
     addResumeItem(x: number, y: number) {
         this.starCollected = false;
         const resumeItem = this.physics.add.sprite(x, y, "star").setScale(0.5);
@@ -277,12 +302,21 @@ export class PlayGame extends Scene {
     showResumeDetails() {
         if (this.currentResumeIndex < resumeDetails.length) {
             const textBox = this.add
-                .text(400, 300, resumeDetails[this.currentResumeIndex], {
-                    fontSize: "20px",
-                    backgroundColor: "#000",
-                    color: "#fff",
-                    padding: { x: 10, y: 5 },
-                })
+                .text(
+                    (config.width as number) / 2,
+                    (config.height as number) / 2,
+                    resumeDetails[this.currentResumeIndex],
+                    {
+                        fontSize: "20px",
+                        backgroundColor: "#000",
+                        color: "#fff",
+                        padding: { x: 10, y: 5 },
+                        wordWrap: {
+                            width: (config.width as number) - 40,
+                            useAdvancedWrap: true,
+                        },
+                    }
+                )
                 .setOrigin(0.5)
                 .setDepth(10);
 
@@ -343,18 +377,21 @@ export class PlayGame extends Scene {
         lPipe.x = uPipe.x;
         lPipe.y = uPipe.y + pipeVerticalDistance;
 
+        const upperPipeHeight = uPipe.y;
+        const lowerPipeHeight = (this.config.height as number) - lPipe.y;
+
+        uPipe.setDisplaySize(uPipe.width, upperPipeHeight);
+        lPipe.setDisplaySize(lPipe.width, lowerPipeHeight);
+
         if (lPipe.body) {
             lPipe.body.velocity.x = -200;
         }
         if (uPipe.body) {
             uPipe.body.velocity.x = -200;
         }
-
+        const pipeCenterX = uPipe.x + uPipe.width / 2;
         if (this.pipeCounter % 4 === 0) {
-            this.addResumeItem(
-                uPipe.x + 25,
-                uPipe.y + pipeVerticalDistance / 2
-            );
+            this.addResumeItem(pipeCenterX, uPipe.y + pipeVerticalDistance / 2);
         }
         this.pipeCounter++;
     }
@@ -411,28 +448,43 @@ export class PlayGame extends Scene {
         this.physics.pause();
 
         this.readyText = this.add
-            .text(400, 300, "Ready", {
-                fontSize: "64px",
-                color: "#fff",
-            })
+            .text(
+                (config.width as number) / 2,
+                (config.height as number) / 2,
+                "Ready",
+                {
+                    fontSize: "64px",
+                    color: "#fff",
+                }
+            )
             .setOrigin(0.5)
             .setVisible(false)
             .setDepth(10);
 
         this.steadyText = this.add
-            .text(400, 300, "Steady", {
-                fontSize: "64px",
-                color: "#fff",
-            })
+            .text(
+                (config.width as number) / 2,
+                (config.height as number) / 2,
+                "Steady",
+                {
+                    fontSize: "64px",
+                    color: "#fff",
+                }
+            )
             .setOrigin(0.5)
             .setVisible(false)
             .setDepth(10);
 
         this.goText = this.add
-            .text(400, 300, "Go", {
-                fontSize: "64px",
-                color: "#fff",
-            })
+            .text(
+                (config.width as number) / 2,
+                (config.height as number) / 2,
+                "Go",
+                {
+                    fontSize: "64px",
+                    color: "#fff",
+                }
+            )
             .setOrigin(0.5)
             .setVisible(false)
             .setDepth(10);

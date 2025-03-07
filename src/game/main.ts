@@ -11,16 +11,20 @@ import { PauseMenu } from "./scenes/PauseMenu";
 //  https://newdocs.phaser.io/docs/3.70.0/Phaser.Types.Core.GameConfig
 export const config: Phaser.Types.Core.GameConfig = {
     type: AUTO,
-    width: 800,
-    height: 600,
+    width: window.innerWidth,
+    height: window.innerHeight,
     parent: "game-container",
     pixelArt: true,
     backgroundColor: "#028af8",
     scene: [Boot, Preloader, MainMenu, PlayGame, PauseMenu, MainGame, GameOver],
+    scale: {
+        mode: Phaser.Scale.RESIZE,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+    },
     physics: {
         default: "arcade",
         arcade: {
-            debug: false,
+            debug: true,
         },
     },
 };
