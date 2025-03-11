@@ -64,6 +64,7 @@ export class PlayGame extends Scene {
     hitSound: Phaser.Sound.BaseSound;
     starCollected: boolean = false;
     currentDifficulty: DifficultyLevels = "EASY";
+    resumeItem: GameObjects.Sprite | null = null;
 
     constructor() {
         super("PlayGame");
@@ -80,7 +81,6 @@ export class PlayGame extends Scene {
         } else {
             this.bestScore = 0;
         }
-        this.scale.on("resize", this.handleResize, this);
     }
 
     create() {
@@ -176,13 +176,21 @@ export class PlayGame extends Scene {
 
         this.bird.play("fly");
 
+        this.scale.on("resize", this.handleResize, this);
+        this.handleResize(this.scale.gameSize);
+        this.events.on("shutdown", this.shutdown, this);
         EventBus.emit("current-scene-ready", this);
     }
 
+    shutdown() {
+        this.scale.off("resize", this.handleResize, this);
+    }
+
     update() {
+        const { height } = this.scale.gameSize;
         if (
             !this.diedFromCollision &&
-            (this.bird.getBounds().bottom >= (config.height as number) ||
+            (this.bird.getBounds().bottom >= (height as number) ||
                 this.bird.y <= 0)
         ) {
             this.physics.pause();
@@ -192,7 +200,7 @@ export class PlayGame extends Scene {
 
         if (
             this.diedFromCollision &&
-            (this.bird.y > (config.height as number) ||
+            (this.bird.y > (height as number) ||
                 this.bird.y < -this.bird.height)
         ) {
             this.handleGameOver();
@@ -261,12 +269,31 @@ export class PlayGame extends Scene {
     handleResize(gameSize: Phaser.Structs.Size) {
         const { width, height } = gameSize;
 
+        if (this.cameras.main) {
+            this.cameras.main.setSize(width, height);
+        }
+
         this.resizeBackground();
 
-        this.bird.setPosition(width * 0.1, height / 2);
-        this.scoreText.setPosition(16, 16);
-        this.bestScoreText.setPosition(16, 48);
-        this.pauseButton.setPosition(width - 20, height - 20);
+        if (this.bird) {
+            this.bird.setPosition(width * 0.1, height / 2);
+        }
+
+        if (this.scoreText) {
+            this.scoreText.setPosition(16, 16);
+        }
+
+        if (this.bestScoreText) {
+            this.bestScoreText.setPosition(16, 48);
+        }
+
+        this.readyText.setPosition(width / 2, height / 2);
+        this.steadyText.setPosition(width / 2, height / 2);
+        this.goText.setPosition(width / 2, height / 2);
+
+        if (this.pauseButton) {
+            this.pauseButton.setPosition(width - 20, height - 20);
+        }
 
         this.pipes.getChildren().forEach((pipe) => {
             const pipeSprite = pipe as Phaser.GameObjects.Sprite;
@@ -277,10 +304,12 @@ export class PlayGame extends Scene {
     }
 
     resizeBackground() {
+        if (!this.background) return;
         this.background.setPosition(
             this.scale.width / 2,
             this.scale.height / 2
         );
+
         const scaleX = this.scale.width / this.background.width;
         const scaleY = this.scale.height / this.background.height;
         this.background.setScale(Math.max(scaleX, scaleY));
@@ -288,23 +317,24 @@ export class PlayGame extends Scene {
 
     addResumeItem(x: number, y: number) {
         this.starCollected = false;
-        const resumeItem = this.physics.add.sprite(x, y, "star").setScale(0.5);
-        resumeItem.body.setVelocityX(-200);
+        this.resumeItem = this.physics.add.sprite(x, y, "star").setScale(0.5);
+        (this.resumeItem.body as Phaser.Physics.Arcade.Body).setVelocityX(-200);
 
-        this.physics.add.overlap(this.bird, resumeItem, () => {
+        this.physics.add.overlap(this.bird, this.resumeItem, () => {
             this.powerUpSound.play();
             this.showResumeDetails();
-            resumeItem.destroy();
+            this.resumeItem?.destroy();
             this.starCollected = true;
         });
     }
 
     showResumeDetails() {
+        const { width, height } = this.scale.gameSize;
         if (this.currentResumeIndex < resumeDetails.length) {
             const textBox = this.add
                 .text(
-                    (config.width as number) / 2,
-                    (config.height as number) / 2,
+                    (width as number) / 2,
+                    (height as number) / 2,
                     resumeDetails[this.currentResumeIndex],
                     {
                         fontSize: "20px",
@@ -330,6 +360,7 @@ export class PlayGame extends Scene {
         this.backgroundMusic.stop();
         this.time.delayedCall(500, () => {
             this.scene.start("GameOver");
+            this.scene.stop("PlayGame");
         });
 
         if (this.score > this.bestScore) {
@@ -356,6 +387,7 @@ export class PlayGame extends Scene {
     }
 
     placePipe(uPipe: GameObjects.Sprite, lPipe: GameObjects.Sprite) {
+        const { height } = this.scale.gameSize;
         const difficulty = difficultyLevels[this.currentDifficulty];
 
         const rightMostXPosition = this.getRightmostPipe();
@@ -365,7 +397,7 @@ export class PlayGame extends Scene {
         );
         const pipeVerticalPosition = Phaser.Math.Between(
             0 + 20,
-            (config.height as number) - 20 - pipeVerticalDistance
+            (height as number) - 20 - pipeVerticalDistance
         );
         const pipeHorizontalDistance = Phaser.Math.Between(
             ...difficulty.pipeHorizontalDistanceRange
@@ -378,7 +410,7 @@ export class PlayGame extends Scene {
         lPipe.y = uPipe.y + pipeVerticalDistance;
 
         const upperPipeHeight = uPipe.y;
-        const lowerPipeHeight = (this.config.height as number) - lPipe.y;
+        const lowerPipeHeight = (height as number) - lPipe.y;
 
         uPipe.setDisplaySize(uPipe.width, upperPipeHeight);
         lPipe.setDisplaySize(lPipe.width, lowerPipeHeight);

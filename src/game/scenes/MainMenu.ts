@@ -36,20 +36,32 @@ export class MainMenu extends Scene {
 
         this.startButton.on("pointerdown", () => {
             this.scene.start("PlayGame");
+            this.scene.stop("MainMenu");
         });
 
-        EventBus.emit("current-scene-ready", this);
-
         this.scale.on("resize", this.resize, this);
+        this.events.on("shutdown", this.shutdown, this);
+        EventBus.emit("current-scene-ready", this);
+    }
+
+    shutdown() {
+        this.scale.off("resize", this.resize, this);
     }
 
     resize(gameSize: Phaser.Structs.Size) {
         const { width, height } = gameSize;
+        if (this.cameras.main) {
+            this.cameras.main.setSize(width, height);
+        }
 
-        this.background.setDisplaySize(width, height);
+        if (this.background) {
+            this.background.setDisplaySize(width, height);
+        }
 
-        this.startButton.setPosition(width / 2, height * 0.6);
-        this.startButton.setFontSize(`${Math.max(width * 0.04, 24)}px`);
+        if (this.startButton) {
+            this.startButton.setPosition(width / 2, height * 0.6);
+            this.startButton.setFontSize(`${Math.max(width * 0.04, 24)}px`);
+        }
     }
 
     update() {}

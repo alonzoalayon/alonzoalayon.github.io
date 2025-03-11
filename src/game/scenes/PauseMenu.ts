@@ -81,16 +81,24 @@ export class PauseMenu extends Scene {
     resize(gameSize: Phaser.Structs.Size) {
         const { width, height } = gameSize;
 
-        this.background.setDisplaySize(width, height);
+        if (this.background) {
+            this.background.setDisplaySize(width, height);
+        }
 
-        this.resumeButton.setPosition(width / 2, height * 0.4);
-        this.resumeButton.setFontSize(`${Math.max(width * 0.04, 24)}px`);
+        if (this.resumeButton) {
+            this.resumeButton.setPosition(width / 2, height * 0.4);
+            this.resumeButton.setFontSize(`${Math.max(width * 0.04, 24)}px`);
+        }
 
-        this.restartButton.setPosition(width / 2, height * 0.5);
-        this.restartButton.setFontSize(`${Math.max(width * 0.04, 24)}px`);
+        if (this.restartButton) {
+            this.restartButton.setPosition(width / 2, height * 0.5);
+            this.restartButton.setFontSize(`${Math.max(width * 0.04, 24)}px`);
+        }
 
-        this.mainMenuButton.setPosition(width / 2, height * 0.6);
-        this.mainMenuButton.setFontSize(`${Math.max(width * 0.04, 24)}px`);
+        if (this.mainMenuButton) {
+            this.mainMenuButton.setPosition(width / 2, height * 0.6);
+            this.mainMenuButton.setFontSize(`${Math.max(width * 0.04, 24)}px`);
+        }
     }
 
     update() {}

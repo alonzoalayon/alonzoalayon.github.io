@@ -2,6 +2,7 @@ import { Scene } from "phaser";
 
 export class Preloader extends Scene {
     private bar!: Phaser.GameObjects.Rectangle;
+    private background!: Phaser.GameObjects.Image;
 
     constructor() {
         super("Preloader");
@@ -15,8 +16,11 @@ export class Preloader extends Scene {
     createBackground() {
         const { width, height } = this.cameras.main;
 
-        const background = this.add.image(0, 0, "background").setOrigin(0, 0);
-        background.setDisplaySize(width, height);
+        this.background = this.add
+            .image(0, 0, "background")
+            .setOrigin(0, 0)
+            .setDisplaySize(width, height)
+            .setName("background");
     }
 
     createLoadingBar() {
@@ -62,21 +66,26 @@ export class Preloader extends Scene {
     }
 
     create() {
+        this.scale.off("resize", this.resize, this);
         this.scene.start("MainMenu");
     }
 
     resize(gameSize: Phaser.Structs.Size) {
         const { width, height } = gameSize;
-        this.cameras.main.setSize(width, height);
 
-        const background = this.children.getByName(
-            "background"
-        ) as Phaser.GameObjects.Image;
-        if (background) background.setDisplaySize(width, height);
+        if (this.cameras.main) {
+            this.cameras.main.setSize(width, height);
+        }
 
-        const centerX = width / 2;
-        const centerY = height / 2;
-        this.bar.setPosition(centerX - (width * 0.6) / 2 + 2, centerY);
+        if (this.background) {
+            this.background.setDisplaySize(width, height);
+        }
+
+        if (this.bar) {
+            const centerX = width / 2;
+            const centerY = height / 2;
+            this.bar.setPosition(centerX - (width * 0.6) / 2 + 2, centerY);
+        }
     }
 }
 
