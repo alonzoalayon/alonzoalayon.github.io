@@ -144,14 +144,25 @@ export class PlayGame extends Scene {
 
         this.createScore();
 
+        // this.pauseButton = this.add
+        //     .image(
+        //         (window.innerWidth as number) + 10,
+        //         (window.innerHeight as number) + 10,
+        //         "pause"
+        //     )
+        //     .setScale(3)
+        //     .setOrigin(1)
+        //     .setInteractive();
+
+        const pauseButtonOffset = 20;
         this.pauseButton = this.add
             .image(
-                (window.innerWidth as number) - 10,
-                (window.innerHeight as number) - 10,
+                window.innerWidth - pauseButtonOffset,
+                pauseButtonOffset,
                 "pause"
             )
             .setScale(3)
-            .setOrigin(1)
+            // .setOrigin(1, 0)
             .setInteractive();
 
         this.pauseButton.on("pointerdown", () => {
@@ -292,7 +303,7 @@ export class PlayGame extends Scene {
         this.goText.setPosition(width / 2, height / 2);
 
         if (this.pauseButton) {
-            this.pauseButton.setPosition(width - 20, height - 20);
+            this.pauseButton.setPosition(width - 40, 40);
         }
 
         this.pipes.getChildren().forEach((pipe) => {
@@ -306,8 +317,8 @@ export class PlayGame extends Scene {
     resizeBackground() {
         if (!this.background) return;
         this.background.setPosition(
-            this.scale.width / 2,
-            this.scale.height / 2
+            window.innerWidth / 2,
+            window.innerHeight / 2
         );
 
         // const scaleX = this.scale.width / this.background.width;
@@ -331,7 +342,9 @@ export class PlayGame extends Scene {
     }
 
     showResumeDetails() {
-        const { width, height } = this.scale.gameSize;
+        // const { width, height } = this.scale.gameSize;
+        const width = window.innerWidth;
+        const height = window.innerHeight;
         if (this.currentResumeIndex < resumeDetails.length) {
             const textBox = this.add
                 .text(
