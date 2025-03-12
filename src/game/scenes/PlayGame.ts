@@ -146,8 +146,8 @@ export class PlayGame extends Scene {
 
         this.pauseButton = this.add
             .image(
-                (this.config.width as number) - 10,
-                (this.config.height as number) - 10,
+                (window.innerWidth as number) - 10,
+                (window.innerHeight as number) - 10,
                 "pause"
             )
             .setScale(3)
@@ -310,8 +310,10 @@ export class PlayGame extends Scene {
             this.scale.height / 2
         );
 
-        const scaleX = this.scale.width / this.background.width;
-        const scaleY = this.scale.height / this.background.height;
+        // const scaleX = this.scale.width / this.background.width;
+        // const scaleY = this.scale.height / this.background.height;
+        const scaleX = window.innerWidth / this.background.width;
+        const scaleY = window.innerHeight / this.background.height;
         this.background.setScale(Math.max(scaleX, scaleY));
     }
 
@@ -387,7 +389,7 @@ export class PlayGame extends Scene {
     }
 
     placePipe(uPipe: GameObjects.Sprite, lPipe: GameObjects.Sprite) {
-        const { height } = this.scale.gameSize;
+        const height = window.innerHeight;
         const difficulty = difficultyLevels[this.currentDifficulty];
 
         const rightMostXPosition = this.getRightmostPipe();
@@ -481,8 +483,8 @@ export class PlayGame extends Scene {
 
         this.readyText = this.add
             .text(
-                (config.width as number) / 2,
-                (config.height as number) / 2,
+                (window.innerWidth as number) / 2,
+                (window.innerHeight as number) / 2,
                 "Ready",
                 {
                     fontSize: "64px",
@@ -495,8 +497,8 @@ export class PlayGame extends Scene {
 
         this.steadyText = this.add
             .text(
-                (config.width as number) / 2,
-                (config.height as number) / 2,
+                (window.innerWidth as number) / 2,
+                (window.innerHeight as number) / 2,
                 "Steady",
                 {
                     fontSize: "64px",
@@ -509,8 +511,8 @@ export class PlayGame extends Scene {
 
         this.goText = this.add
             .text(
-                (config.width as number) / 2,
-                (config.height as number) / 2,
+                (window.innerWidth as number) / 2,
+                (window.innerHeight as number) / 2,
                 "Go",
                 {
                     fontSize: "64px",
