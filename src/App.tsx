@@ -1,0 +1,339 @@
+import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import {
+  Bot,
+  Code2,
+  Folder,
+  Home,
+  Layers,
+  Rocket,
+  ShieldCheck,
+  Sparkles,
+  SquareTerminal,
+  Terminal,
+  Zap,
+} from "lucide-react";
+import "./App.css";
+
+type Mode = "overview" | "systems" | "case-studies" | "console";
+
+const systems = [
+  {
+    title: "AI PR Reviewer",
+    icon: Bot,
+    description:
+      "A GitHub-based review assistant for React, React Native, Expo, testing, and release-risk feedback.",
+    tags: ["OpenAI", "GitHub Actions", "React Native", "QA"],
+  },
+  {
+    title: "Release Risk Scanner",
+    icon: ShieldCheck,
+    description:
+      "A workflow for reviewing dependency upgrades, Expo SDK changes, native build risk, and release readiness.",
+    tags: ["Expo", "EAS", "CI/CD", "Release"],
+  },
+  {
+    title: "Mobile Architecture",
+    icon: Code2,
+    description:
+      "Production React Native architecture using Expo, Zustand, React Query, and reusable feature modules.",
+    tags: ["React Native", "Expo", "Zustand", "TypeScript"],
+  },
+  {
+    title: "QA Ownership",
+    icon: Zap,
+    description:
+      "Testing workflows using Playwright, Maestro concepts, exploratory QA, and production bug prevention.",
+    tags: ["Playwright", "Testing", "QA", "Automation"],
+  },
+];
+
+const caseStudies = [
+  {
+    title: "Owning Releases as the Primary Frontend Engineer",
+    summary:
+      "Managed app release workflows, environment builds, TestFlight / Play testing, and production readiness.",
+  },
+  {
+    title: "Improving Stability Through Frontend QA",
+    summary:
+      "Brought QA thinking into development by testing own work, writing integration tests, and reducing regressions.",
+  },
+  {
+    title: "Modernizing React Native App Architecture",
+    summary:
+      "Helped evolve app structure through reusable components, Zustand stores, React Query cache flows, and Expo tooling.",
+  },
+];
+
+function App() {
+  const [mode, setMode] = useState<Mode>("systems");
+  const [command, setCommand] = useState("");
+
+  const consoleResponse = useMemo(() => {
+    const value = command.toLowerCase();
+
+    if (!value) return "Try: systems, ai, release, testing, mobile";
+
+    if (value.includes("ai")) {
+      return "AI focus: PR review automation, release note parsing, developer workflow acceleration, and portfolio intelligence.";
+    }
+
+    if (value.includes("release")) {
+      return "Release experience: EAS builds, TestFlight, Android closed testing, production branches, tags, and dependency upgrade risk.";
+    }
+
+    if (value.includes("testing") || value.includes("qa")) {
+      return "Testing mindset: integration testing, exploratory QA, Playwright, release validation, and catching issues before users do.";
+    }
+
+    if (value.includes("mobile") || value.includes("expo")) {
+      return "Mobile focus: React Native, Expo, Zustand, React Query, native dependency handling, and app store workflows.";
+    }
+
+    if (value.includes("systems")) {
+      return "Systems available: AI PR Reviewer, Release Risk Scanner, Mobile Architecture, QA Ownership.";
+    }
+
+    return "Command not recognized yet. This will eventually become the AI-powered portfolio assistant.";
+  }, [command]);
+
+  return (
+    <main className="app-shell">
+      <aside className="sidebar">
+        <div className="logo">
+          <Terminal size={28} />
+        </div>
+
+        <div className="side-icons">
+          <button
+            className={mode === "overview" ? "active" : ""}
+            onClick={() => setMode("overview")}
+          >
+            <Home size={22} />
+          </button>
+          <button
+            className={mode === "systems" ? "active" : ""}
+            onClick={() => setMode("systems")}
+          >
+            <Layers size={22} />
+          </button>
+          <button
+            className={mode === "case-studies" ? "active" : ""}
+            onClick={() => setMode("case-studies")}
+          >
+            <Folder size={22} />
+          </button>
+          <button
+            className={mode === "console" ? "active" : ""}
+            onClick={() => setMode("console")}
+          >
+            <SquareTerminal size={22} />
+          </button>
+        </div>
+
+        <div className="socials">
+          <a href="https://github.com/" target="_blank">
+            GH
+          </a>
+          <a href="https://linkedin.com/" target="_blank">
+            in
+          </a>
+        </div>
+      </aside>
+
+      <section className="app">
+        <section className="hero">
+          <motion.div
+            className="hero-copy"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <div className="eyebrow">
+              <Sparkles size={16} />
+              Engineering Systems
+            </div>
+
+            <h1>
+              I build production <span>frontend systems,</span> not portfolio
+              tiles.
+            </h1>
+
+            <p>
+              A React and React Native engineer focused on mobile architecture,
+              release reliability, QA ownership, and AI-assisted developer
+              tools.
+            </p>
+
+            <div className="actions">
+              <button onClick={() => setMode("systems")}>
+                Explore Systems <span>→</span>
+              </button>
+              <button className="secondary" onClick={() => setMode("console")}>
+                <Terminal size={18} />
+                Open Console
+              </button>
+            </div>
+          </motion.div>
+
+          <motion.div
+            className="system-card"
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+          >
+            <div className="card-header">
+              <span className="status-dot" />
+              SYSTEM STATUS
+            </div>
+
+            <div className="status-grid">
+              <Status label="React" value="Advanced" />
+              <Status label="React Native" value="Production" />
+              <Status label="Expo" value="Release-ready" />
+              <Status label="AI Tools" value="In progress" warning />
+            </div>
+
+            <div className="pulse-box">
+              <Rocket size={28} />
+              <strong>Currently building</strong>
+              <span>AI-powered engineering utilities.</span>
+            </div>
+          </motion.div>
+        </section>
+
+        <nav className="mode-nav">
+          <button
+            className={mode === "overview" ? "active" : ""}
+            onClick={() => setMode("overview")}
+          >
+            <Home size={18} />
+            Overview
+          </button>
+          <button
+            className={mode === "systems" ? "active" : ""}
+            onClick={() => setMode("systems")}
+          >
+            <Layers size={18} />
+            Systems
+          </button>
+          <button
+            className={mode === "case-studies" ? "active" : ""}
+            onClick={() => setMode("case-studies")}
+          >
+            <Folder size={18} />
+            Case Studies
+          </button>
+          <button
+            className={mode === "console" ? "active" : ""}
+            onClick={() => setMode("console")}
+          >
+            <SquareTerminal size={18} />
+            Console
+          </button>
+        </nav>
+
+        <section className="panel">
+          {mode === "overview" && (
+            <div className="overview">
+              <h2>Not a traditional portfolio.</h2>
+              <p>
+                This site is designed like an interactive engineering console.
+                Instead of generic project cards, it highlights production
+                ownership: architecture, releases, testing, app stability, and
+                AI-assisted workflows.
+              </p>
+            </div>
+          )}
+
+          {mode === "systems" && (
+            <div className="grid">
+              {systems.map((system) => {
+                const Icon = system.icon;
+
+                return (
+                  <motion.article
+                    className="system-tile"
+                    key={system.title}
+                    whileHover={{ y: -6 }}
+                  >
+                    <Icon size={42} />
+                    <h3>{system.title}</h3>
+                    <p>{system.description}</p>
+
+                    <div className="tags">
+                      {system.tags.map((tag) => (
+                        <span key={tag}>{tag}</span>
+                      ))}
+                    </div>
+                  </motion.article>
+                );
+              })}
+            </div>
+          )}
+
+          {mode === "case-studies" && (
+            <div className="case-list">
+              {caseStudies.map((study, index) => (
+                <article className="case-card" key={study.title}>
+                  <span>0{index + 1}</span>
+                  <div>
+                    <h3>{study.title}</h3>
+                    <p>{study.summary}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+
+          {mode === "console" && (
+            <div className="console">
+              <div className="console-header">
+                <Terminal size={18} />
+                portfolio.console
+              </div>
+
+              <div className="console-body">
+                <p className="muted">
+                  This is where we’ll later connect the AI assistant.
+                </p>
+
+                <label>
+                  Enter command
+                  <input
+                    value={command}
+                    onChange={(event) => setCommand(event.target.value)}
+                    placeholder="Try: ai, systems, release, testing, mobile"
+                  />
+                </label>
+
+                <div className="console-output">
+                  <span>{">"}</span>
+                  <p>{consoleResponse}</p>
+                </div>
+              </div>
+            </div>
+          )}
+        </section>
+      </section>
+    </main>
+  );
+}
+
+function Status({
+  label,
+  value,
+  warning,
+}: {
+  label: string;
+  value: string;
+  warning?: boolean;
+}) {
+  return (
+    <div className="status">
+      <span>{label}</span>
+      <strong className={warning ? "warning" : ""}>{value}</strong>
+    </div>
+  );
+}
+
+export default App;
