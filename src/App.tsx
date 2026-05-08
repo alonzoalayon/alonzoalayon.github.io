@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   Bot,
@@ -69,34 +69,43 @@ const caseStudies = [
 function App() {
   const [mode, setMode] = useState<Mode>("systems");
   const [command, setCommand] = useState("");
+  const [answer, setAnswer] = useState(
+    "Try asking: What kind of engineer is Alonzo?",
+  );
+  const [isAsking, setIsAsking] = useState(false);
 
-  const consoleResponse = useMemo(() => {
-    const value = command.toLowerCase();
+  const askPortfolio = async () => {
+    if (!command.trim() || isAsking) return;
 
-    if (!value) return "Try: systems, ai, release, testing, mobile";
+    try {
+      setIsAsking(true);
+      setAnswer("Thinking...");
 
-    if (value.includes("ai")) {
-      return "AI focus: PR review automation, release note parsing, developer workflow acceleration, and portfolio intelligence.";
+      const response = await fetch("/api/ask", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          question: command,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error ?? "Request failed");
+      }
+
+      setAnswer(data.answer);
+    } catch {
+      setAnswer(
+        "The AI console failed to respond. Make sure your server is running with npm run server.",
+      );
+    } finally {
+      setIsAsking(false);
     }
-
-    if (value.includes("release")) {
-      return "Release experience: EAS builds, TestFlight, Android closed testing, production branches, tags, and dependency upgrade risk.";
-    }
-
-    if (value.includes("testing") || value.includes("qa")) {
-      return "Testing mindset: integration testing, exploratory QA, Playwright, release validation, and catching issues before users do.";
-    }
-
-    if (value.includes("mobile") || value.includes("expo")) {
-      return "Mobile focus: React Native, Expo, Zustand, React Query, native dependency handling, and app store workflows.";
-    }
-
-    if (value.includes("systems")) {
-      return "Systems available: AI PR Reviewer, Release Risk Scanner, Mobile Architecture, QA Ownership.";
-    }
-
-    return "Command not recognized yet. This will eventually become the AI-powered portfolio assistant.";
-  }, [command]);
+  };
 
   return (
     <main className="app-shell">
@@ -294,21 +303,35 @@ function App() {
 
               <div className="console-body">
                 <p className="muted">
-                  This is where we’ll later connect the AI assistant.
+                  Ask questions about my engineering experience, systems, and AI
+                  tooling.
                 </p>
 
                 <label>
-                  Enter command
+                  Ask the portfolio AI
                   <input
                     value={command}
                     onChange={(event) => setCommand(event.target.value)}
-                    placeholder="Try: ai, systems, release, testing, mobile"
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter") {
+                        askPortfolio();
+                      }
+                    }}
+                    placeholder="Ask: What kind of engineer is Alonzo?"
                   />
                 </label>
 
+                <button
+                  className="ask-button"
+                  onClick={askPortfolio}
+                  disabled={isAsking}
+                >
+                  {isAsking ? "Thinking..." : "Ask AI"}
+                </button>
+
                 <div className="console-output">
                   <span>{">"}</span>
-                  <p>{consoleResponse}</p>
+                  <p>{answer}</p>
                 </div>
               </div>
             </div>

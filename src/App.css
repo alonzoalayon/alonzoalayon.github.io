@@ -529,4 +529,18 @@ h1 span {
   .system-tile {
     padding: 22px;
   }
+  .ask-button {
+    margin-top: 14px;
+    border: 0;
+    border-radius: 14px;
+    padding: 13px 18px;
+    color: #050816;
+    background: linear-gradient(135deg, #fde047, #facc15, #f97316);
+    font-weight: 900;
+  }
+
+  .ask-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
 }
