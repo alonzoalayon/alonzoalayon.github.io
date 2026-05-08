@@ -133,10 +133,10 @@ function App() {
         </div>
 
         <div className="socials">
-          <a href="https://github.com/" target="_blank">
+          <a href="https://github.com/alonzoalayon" target="_blank">
             GH
           </a>
-          <a href="https://linkedin.com/" target="_blank">
+          <a href="https://linkedin.com/in/alonzoalayon" target="_blank">
             in
           </a>
         </div>
