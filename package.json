@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "server": "tsx server.ts",
-    "dev:all": "npm run server & npm run dev"
+    "dev:all": "npm run server & npm run dev",
+    "start": "tsx server.ts"
   },
   "dependencies": {
     "cors": "^2.8.6",
