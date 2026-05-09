@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
   Bot,
@@ -48,6 +48,14 @@ const systems = [
   },
 ];
 
+const suggestedPrompts = [
+  "What kind of engineer is Alonzo?",
+  "Explain Alonzo's React Native experience.",
+  "What AI tools is Alonzo building?",
+  "How does Alonzo approach frontend architecture?",
+  "Would Alonzo be a good fit for a small startup team?",
+];
+
 const caseStudies = [
   {
     title: "Owning Releases as the Primary Frontend Engineer",
@@ -72,14 +80,21 @@ function App() {
   const [answer, setAnswer] = useState(
     "Try asking: What kind of engineer is Alonzo?",
   );
+  const [displayedAnswer, setDisplayedAnswer] = useState(
+    "Try asking: What kind of engineer is Alonzo?",
+  );
   const [isAsking, setIsAsking] = useState(false);
 
-  const askPortfolio = async () => {
-    if (!command.trim() || isAsking) return;
+  const askPortfolio = async (promptOverride?: string) => {
+    const question = (promptOverride ?? command).trim();
+
+    if (!question || isAsking) return;
 
     try {
       setIsAsking(true);
-      setAnswer("Thinking...");
+      setCommand(question);
+      setDisplayedAnswer("Thinking...");
+      setAnswer("");
 
       const response = await fetch("/api/ask", {
         method: "POST",
@@ -87,7 +102,7 @@ function App() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          question: command,
+          question,
         }),
       });
 
@@ -106,6 +121,23 @@ function App() {
       setIsAsking(false);
     }
   };
+
+  useEffect(() => {
+    if (!answer) return;
+
+    let index = 0;
+
+    const interval = window.setInterval(() => {
+      index += 1;
+      setDisplayedAnswer(answer.slice(0, index));
+
+      if (index >= answer.length) {
+        window.clearInterval(interval);
+      }
+    }, 12);
+
+    return () => window.clearInterval(interval);
+  }, [answer]);
 
   return (
     <main className="app-shell">
@@ -321,9 +353,22 @@ function App() {
                   />
                 </label>
 
+                <div className="suggested-prompts">
+                  {suggestedPrompts.map((prompt) => (
+                    <button
+                      key={prompt}
+                      type="button"
+                      onClick={() => askPortfolio(prompt)}
+                      disabled={isAsking}
+                    >
+                      {prompt}
+                    </button>
+                  ))}
+                </div>
+
                 <button
                   className="ask-button"
-                  onClick={askPortfolio}
+                  onClick={() => askPortfolio()}
                   disabled={isAsking}
                 >
                   {isAsking ? "Thinking..." : "Ask AI"}
@@ -331,7 +376,12 @@ function App() {
 
                 <div className="console-output">
                   <span>{">"}</span>
-                  <p>{answer}</p>
+                  <p>
+                    {displayedAnswer}
+                    {!isAsking && displayedAnswer.length < answer.length ? (
+                      <span className="cursor">▌</span>
+                    ) : null}
+                  </p>
                 </div>
               </div>
             </div>
