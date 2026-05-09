@@ -48,14 +48,6 @@ const systems = [
   },
 ];
 
-const suggestedPrompts = [
-  "What kind of engineer is Alonzo?",
-  "Explain Alonzo's React Native experience.",
-  "What AI tools is Alonzo building?",
-  "How does Alonzo approach frontend architecture?",
-  "Would Alonzo be a good fit for a small startup team?",
-];
-
 const caseStudies = [
   {
     title: "Owning Releases as the Primary Frontend Engineer",
@@ -74,6 +66,40 @@ const caseStudies = [
   },
 ];
 
+const systemCommands = [
+  "help",
+  "resume pdf",
+  "resume docx",
+  "open github",
+  "open linkedin",
+  "show writeups",
+  "show notes",
+  "show systems",
+];
+
+const aiQueries = [
+  {
+    label: "ask engineer-profile",
+    question: "What kind of engineer is Alonzo?",
+  },
+  {
+    label: "ask mobile-architecture",
+    question: "How does Alonzo approach React Native architecture?",
+  },
+  {
+    label: "ask ai-tooling",
+    question: "What AI tools is Alonzo building?",
+  },
+  {
+    label: "ask release-risk",
+    question: "How does Alonzo think about release risk?",
+  },
+  {
+    label: "ask startup-fit",
+    question: "Would Alonzo be a good fit for a small startup team?",
+  },
+];
+
 function App() {
   const [mode, setMode] = useState<Mode>("systems");
   const [command, setCommand] = useState("");
@@ -87,6 +113,98 @@ function App() {
 
   const consoleRef = useRef<HTMLDivElement | null>(null);
   const systemsRef = useRef<HTMLDivElement | null>(null);
+
+  const runConsoleCommand = async (rawCommand?: string) => {
+    const input = (rawCommand ?? command).trim();
+    const value = input.toLowerCase();
+
+    if (!input || isAsking) return;
+
+    setCommand(input);
+
+    if (value === "help") {
+      setAnswer(`Available system commands:
+
+help — show commands
+resume pdf — open PDF resume
+resume docx — open DOCX resume
+open github — open GitHub
+open linkedin — open LinkedIn
+show writeups — list architecture writeups
+show notes — show engineering notes
+show systems — jump to engineering systems
+
+You can also ask natural language questions, like:
+"What kind of engineer is Alonzo?"
+"How does he approach React Native architecture?"`);
+      return;
+    }
+
+    if (value === "resume pdf") {
+      window.open("/resume.pdf", "_blank");
+      setAnswer("Exporting resume profile… Opening resume.pdf.");
+      return;
+    }
+
+    if (value === "resume docx") {
+      window.open("/resume-doc.docx", "_blank");
+      setAnswer("Exporting ATS resume profile… Opening resume-doc.docx.");
+      return;
+    }
+
+    if (value === "resume") {
+      setAnswer(`Resume exports available:
+
+resume pdf — open PDF version
+resume docx — open ATS-friendly DOCX version`);
+      return;
+    }
+
+    if (value === "open github" || value === "github") {
+      window.open("https://github.com/alonzoalayon", "_blank");
+      setAnswer("Opening GitHub engineering archive.");
+      return;
+    }
+
+    if (value === "open linkedin" || value === "linkedin") {
+      window.open("https://linkedin.com/in/alonzoalayon", "_blank");
+      setAnswer("Opening LinkedIn profile.");
+      return;
+    }
+
+    if (value === "show writeups" || value === "writeups") {
+      setAnswer(`Architecture writeups:
+
+- How I think about Expo SDK upgrades
+- How I approach release risk in mobile apps
+- Why frontend engineers should own QA
+- Building AI tools for small engineering teams`);
+      return;
+    }
+
+    if (value === "show notes" || value === "notes") {
+      setAnswer(`Engineering notes:
+
+- I think in systems, not isolated components.
+- I care about release risk because users feel bugs before engineers do.
+- QA is not separate from frontend engineering.
+- AI is most useful when it improves real workflows.`);
+      return;
+    }
+
+    if (value === "show systems" || value === "systems") {
+      setMode("systems");
+      setAnswer("Loading engineering systems…");
+      return;
+    }
+
+    if (value.startsWith("ask ")) {
+      await askPortfolio(input.replace(/^ask\s+/i, ""));
+      return;
+    }
+
+    await askPortfolio(input);
+  };
 
   const askPortfolio = async (promptOverride?: string) => {
     const question = (promptOverride ?? command).trim();
@@ -354,43 +472,64 @@ function App() {
 
               <div className="console-body">
                 <p className="muted">
-                  Ask questions about my engineering experience, systems, and AI
-                  tooling.
+                  Natural language supported. Ask anything about my engineering
+                  experience, or run a system command.
                 </p>
 
                 <label>
-                  Ask the portfolio AI
+                  Enter command or question
                   <input
                     value={command}
                     onChange={(event) => setCommand(event.target.value)}
                     onKeyDown={(event) => {
                       if (event.key === "Enter") {
-                        askPortfolio();
+                        runConsoleCommand();
                       }
                     }}
-                    placeholder="Ask: What kind of engineer is Alonzo?"
+                    placeholder='Try: resume pdf, show systems, or "What kind of engineer is Alonzo?"'
                   />
                 </label>
 
-                <div className="suggested-prompts">
-                  {suggestedPrompts.map((prompt) => (
-                    <button
-                      key={prompt}
-                      type="button"
-                      onClick={() => askPortfolio(prompt)}
-                      disabled={isAsking}
-                    >
-                      {prompt}
-                    </button>
-                  ))}
+                <div className="quick-command-groups">
+                  <div>
+                    <p className="quick-command-title">System Commands</p>
+                    <div className="suggested-prompts">
+                      {systemCommands.map((item) => (
+                        <button
+                          key={item}
+                          type="button"
+                          onClick={() => runConsoleCommand(item)}
+                          disabled={isAsking}
+                        >
+                          {item}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <p className="quick-command-title">AI Queries</p>
+                    <div className="suggested-prompts">
+                      {aiQueries.map((item) => (
+                        <button
+                          key={item.label}
+                          type="button"
+                          onClick={() => runConsoleCommand(item.question)}
+                          disabled={isAsking}
+                        >
+                          {item.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
 
                 <button
                   className="ask-button"
-                  onClick={() => askPortfolio()}
+                  onClick={() => runConsoleCommand()}
                   disabled={isAsking}
                 >
-                  {isAsking ? "Thinking..." : "Ask AI"}
+                  {isAsking ? "Thinking..." : "Run Console"}
                 </button>
 
                 <div className="console-output">
