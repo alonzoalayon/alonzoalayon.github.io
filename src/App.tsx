@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import {
   Bot,
@@ -85,6 +85,8 @@ function App() {
   );
   const [isAsking, setIsAsking] = useState(false);
 
+  const consoleRef = useRef<HTMLDivElement | null>(null);
+
   const askPortfolio = async (promptOverride?: string) => {
     const question = (promptOverride ?? command).trim();
 
@@ -138,6 +140,15 @@ function App() {
 
     return () => window.clearInterval(interval);
   }, [answer]);
+
+  useEffect(() => {
+    if (mode === "console" && consoleRef.current) {
+      consoleRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [mode]);
 
   return (
     <main className="app-shell">
@@ -327,7 +338,7 @@ function App() {
           )}
 
           {mode === "console" && (
-            <div className="console">
+            <div className="console" ref={consoleRef}>
               <div className="console-header">
                 <Terminal size={18} />
                 portfolio.console
