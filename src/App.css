@@ -1,3 +1,20 @@
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.hero,
+.panel,
+.grid,
+.system-card,
+.system-tile,
+.console {
+  min-width: 0;
+}
+
 :root {
   color: #f8fafc;
   background: #030712;
@@ -514,33 +531,88 @@ h1 span {
 }
 
 @media (max-width: 560px) {
-  .app {
-    width: min(100% - 24px, 1180px);
+  .app-shell {
+    width: 100%;
+    overflow-x: hidden;
   }
 
-  .panel {
-    padding: 18px;
+  .app {
+    width: 100%;
+    max-width: 100%;
+    padding: 28px 18px;
+    overflow-x: hidden;
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    text-align: center;
+  }
+
+  .hero-copy {
+    min-width: 0;
+  }
+
+  .eyebrow {
+    max-width: 100%;
+    margin-inline: auto;
+    font-size: 11px;
+    padding: 8px 12px;
+    white-space: normal;
+    text-align: center;
+  }
+
+  h1 {
+    max-width: 100%;
+    font-size: clamp(42px, 12vw, 58px);
+    line-height: 1;
+    letter-spacing: -0.06em;
+    overflow-wrap: break-word;
+  }
+
+  .hero p {
+    max-width: 100%;
+    font-size: 17px;
+    line-height: 1.55;
+  }
+
+  .actions {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .actions button {
+    flex: 1 1 100%;
+    justify-content: center;
+    max-width: 360px;
+  }
+
+  .system-card {
+    width: 100%;
+    max-width: 100%;
+    padding: 20px;
+  }
+
+  .mode-nav {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 8px;
   }
 
   .mode-nav button {
+    flex: 0 0 auto;
     padding: 13px 16px;
   }
 
-  .system-tile {
-    padding: 22px;
-  }
-  .ask-button {
-    margin-top: 14px;
-    border: 0;
-    border-radius: 14px;
-    padding: 13px 18px;
-    color: #050816;
-    background: linear-gradient(135deg, #fde047, #facc15, #f97316);
-    font-weight: 900;
+  .panel {
+    width: 100%;
+    max-width: 100%;
+    padding: 18px;
+    overflow-x: hidden;
   }
 
-  .ask-button:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
+  .grid {
+    grid-template-columns: 1fr;
   }
 }
