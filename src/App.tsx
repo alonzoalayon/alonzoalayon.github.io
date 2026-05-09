@@ -86,6 +86,7 @@ function App() {
   const [isAsking, setIsAsking] = useState(false);
 
   const consoleRef = useRef<HTMLDivElement | null>(null);
+  const systemsRef = useRef<HTMLDivElement | null>(null);
 
   const askPortfolio = async (promptOverride?: string) => {
     const question = (promptOverride ?? command).trim();
@@ -144,6 +145,13 @@ function App() {
   useEffect(() => {
     if (mode === "console" && consoleRef.current) {
       consoleRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+
+    if (mode === "systems" && systemsRef.current) {
+      systemsRef.current.scrollIntoView({
         behavior: "smooth",
         block: "start",
       });
@@ -298,7 +306,7 @@ function App() {
           )}
 
           {mode === "systems" && (
-            <div className="grid">
+            <div className="grid" ref={systemsRef}>
               {systems.map((system) => {
                 const Icon = system.icon;
 
